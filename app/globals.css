@@ -27,3 +27,35 @@ body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Magic UI-style animated gradient text */
+@keyframes animated-gradient-text {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Shimmer band: smooth sweep full width, gradual shorten */
+@keyframes shimmer-band {
+  0% {
+    transform: translateX(-100%) scaleX(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(60%) scaleX(0.9);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(180%) scaleX(0.65);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateX(280%) scaleX(0.5);
+    opacity: 0.9;
+  }
+}
+
+.shimmer-band-animation {
+  animation: shimmer-band 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+
