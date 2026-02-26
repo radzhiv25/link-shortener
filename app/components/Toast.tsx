@@ -11,7 +11,7 @@ export function useToast() {
   return show;
 }
 
-const MESSAGE = "Oops, we're working on the link shortening feature — check back soon!";
+const MESSAGE = "Oops, we're working on the link shortening feature. Check back soon!";
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [visible, setVisible] = useState(false);
