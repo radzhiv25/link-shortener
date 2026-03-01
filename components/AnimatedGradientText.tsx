@@ -22,7 +22,7 @@ export function AnimatedGradientText({
       className={`inline-block ${className}`.trim()}
       style={
         {
-          background: `linear-gradient(90deg, ${colorFrom}, ${colorTo}, ${colorFrom})`,
+          backgroundImage: `linear-gradient(90deg, ${colorFrom}, ${colorTo}, ${colorFrom})`,
           backgroundSize: '200% 100%',
           WebkitBackgroundClip: 'text',
           backgroundClip: 'text',

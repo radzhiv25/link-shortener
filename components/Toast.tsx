@@ -3,7 +3,9 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
-const ToastContext = createContext<(() => void) | null>(null);
+type ShowToast = (message?: string) => void;
+
+const ToastContext = createContext<ShowToast | null>(null);
 
 export function useToast() {
   const show = useContext(ToastContext);
@@ -11,14 +13,16 @@ export function useToast() {
   return show;
 }
 
-const MESSAGE = "Oops, we're working on the link shortening feature. Check back soon!";
+const DEFAULT_MESSAGE = "Oops, we're working on the link shortening feature. Check back soon!";
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState(DEFAULT_MESSAGE);
 
-  const showToast = useCallback(() => {
+  const showToast = useCallback<ShowToast>((msg) => {
+    setMessage(msg ?? DEFAULT_MESSAGE);
     setVisible(true);
-    const t = setTimeout(() => setVisible(false), 4000);
+    const t = setTimeout(() => setVisible(false), 5000);
     return () => clearTimeout(t);
   }, []);
 
@@ -36,7 +40,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             role="status"
             aria-live="polite"
           >
-            {MESSAGE}
+            {message}
           </motion.div>
         )}
       </AnimatePresence>

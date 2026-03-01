@@ -1,9 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { motion } from 'motion/react';
 
 export function Navbar() {
+  const { data: session, status } = useSession();
+
   return (
     <motion.header
       initial={{ opacity: 0 }}
@@ -32,6 +35,23 @@ export function Navbar() {
             >
               Shorten
             </Link>
+            {status !== 'loading' && (
+              session?.user ? (
+                <Link
+                  href="/dashboard"
+                  className="text-[#666] transition-colors duration-300 hover:text-[#111] dark:text-[#888] dark:hover:text-[#f5f5f5]"
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className="text-[#666] transition-colors duration-300 hover:text-[#111] dark:text-[#888] dark:hover:text-[#f5f5f5]"
+                >
+                  Log in
+                </Link>
+              )
+            )}
           </nav>
         </div>
       </div>

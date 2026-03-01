@@ -1,32 +1,62 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { motion } from 'motion/react';
 import { HiOutlineArrowRight, HiOutlineLink } from 'react-icons/hi2';
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { useToast } from './components/Toast';
-import { useTheme } from './components/ThemeProvider';
-import { AnimatedGradientText } from './components/AnimatedGradientText';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+import { useToast } from '@/components/Toast';
+import { useTheme } from '@/components/ThemeProvider';
+import { AnimatedGradientText } from '@/components/AnimatedGradientText';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
-const PROCESSING_MS = 1400;
+const DEFAULT_EXPIRY_DAYS = 7;
+const MAX_EXPIRY_DAYS = 30;
 
 export default function Home() {
   const showToast = useToast();
   const { theme } = useTheme();
+  const { data: session } = useSession();
   const isDark = theme === 'dark';
   const [isProcessing, setIsProcessing] = useState(false);
   const [url, setUrl] = useState('');
+  const [customSlug, setCustomSlug] = useState('');
+  const [expiresInDays, setExpiresInDays] = useState(DEFAULT_EXPIRY_DAYS);
 
   const hasLink = url.trim().length > 0;
 
-  const handleShorten = () => {
+  const handleShorten = async () => {
     if (isProcessing || !hasLink) return;
+    const originalUrl = url.trim();
     setIsProcessing(true);
-    setTimeout(() => {
-      showToast();
+    try {
+      const body: { url: string; customSlug?: string; expiresInDays?: number } = { url: originalUrl };
+      if (session?.user && customSlug.trim()) body.customSlug = customSlug.trim();
+      if (session?.user && expiresInDays >= 1 && expiresInDays <= MAX_EXPIRY_DAYS) body.expiresInDays = expiresInDays;
+      const res = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        showToast(data?.error ?? 'Something went wrong');
+        return;
+      }
+      const shortUrl = data.shortUrl as string | undefined;
+      if (shortUrl) {
+        await navigator.clipboard.writeText(shortUrl).catch(() => {});
+        showToast(`Short link copied: ${shortUrl}`);
+      } else {
+        showToast('Short link created.');
+      }
+    } catch {
+      showToast('Something went wrong');
+    } finally {
       setIsProcessing(false);
-    }, PROCESSING_MS);
+    }
   };
 
   return (
@@ -92,8 +122,34 @@ export default function Home() {
                   )}
                 </button>
               </div>
+              {session?.user && (
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="custom-slug" className="text-xs text-[#666] dark:text-[#a3a3a3]">Custom slug (optional)</Label>
+                    <Input
+                      id="custom-slug"
+                      placeholder="my-link"
+                      value={customSlug}
+                      onChange={(e) => setCustomSlug(e.target.value)}
+                      className="rounded-lg border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="expiry" className="text-xs text-[#666] dark:text-[#a3a3a3]">Expires in (days, 1–30)</Label>
+                    <Input
+                      id="expiry"
+                      type="number"
+                      min={1}
+                      max={MAX_EXPIRY_DAYS}
+                      value={expiresInDays}
+                      onChange={(e) => setExpiresInDays(Math.min(MAX_EXPIRY_DAYS, Math.max(1, Number(e.target.value) || 7)))}
+                      className="rounded-lg border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
+                    />
+                  </div>
+                </div>
+              )}
               <p className="text-xs text-[#888] transition-colors duration-300 dark:text-[#737373]">
-                Sign up for a dashboard to manage and track your links.
+                {session?.user ? 'Links expire in 7–30 days. Manage them in your dashboard.' : 'Sign up for a dashboard, custom slugs, and expiry (7–30 days).'}
               </p>
             </motion.div>
           </section>
@@ -186,7 +242,7 @@ export default function Home() {
           <section className="mt-20 sm:mt-24">
             <div
               className="group flex cursor-pointer flex-col gap-4 rounded-xl border border-[#e5e5e5] bg-[#fafafa] p-6 transition-colors duration-300 hover:border-[#e0e0e0] hover:bg-[#f8f8f8] dark:border-[#262626] dark:bg-[#0a0a0a] dark:hover:border-[#333] dark:hover:bg-[#0f0f0f] sm:flex-row sm:items-center sm:justify-between"
-              onClick={showToast}
+              onClick={() => showToast()}
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), showToast())}
               role="button"
               tabIndex={0}
