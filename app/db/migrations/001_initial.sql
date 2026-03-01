@@ -21,6 +21,19 @@ CREATE TABLE IF NOT EXISTS clicks (
   device_type VARCHAR(20)
 );
 
--- Create index for faster lookups
 CREATE INDEX IF NOT EXISTS idx_short_code ON urls(short_code);
 CREATE INDEX IF NOT EXISTS idx_clicks_short_code ON clicks(short_code);
+
+-- Users table for NextAuth Credentials
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT,
+  password_hash TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+ALTER TABLE urls ADD COLUMN IF NOT EXISTS user_id TEXT REFERENCES users(id) ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS idx_urls_user_id ON urls(user_id);
+CREATE INDEX IF NOT EXISTS idx_urls_expires_at ON urls(expires_at);
