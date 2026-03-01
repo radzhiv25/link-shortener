@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { HiOutlineArrowRight } from 'react-icons/hi2';
-import { Navbar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 const TYPEWRITER_TEXT = 'What is shrtnr?';
 const TYPEWRITER_MS = 85;
