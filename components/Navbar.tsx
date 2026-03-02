@@ -12,7 +12,7 @@ export function Navbar() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="fixed left-0 top-0 z-10 w-full border-b border-[#e5e5e5] bg-white/95 backdrop-blur-sm transition-colors duration-300 dark:border-[#1a1a1a] dark:bg-black/95 md:left-1/2 md:w-[50vw] md:-translate-x-1/2"
+      className="fixed left-0 top-0 z-10 w-full border-b border-[#e5e5e5] bg-transparent backdrop-blur-sm transition-colors duration-300 dark:border-[#1a1a1a] md:left-1/2 md:w-[50vw] md:-translate-x-1/2"
     >
       <div className="flex w-full items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
         <Link

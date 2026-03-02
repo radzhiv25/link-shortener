@@ -42,7 +42,7 @@ function LoginForm() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4">
-      <div className="w-full max-w-sm space-y-6">
+      <div className="w-full max-w-sm space-y-6 border border-dashed p-4 rounded">
         <div className="text-center">
           <Link href="/" className="text-xl font-medium">
             shrtnr
