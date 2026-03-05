@@ -44,7 +44,7 @@ export function DashboardShell({ userEmail, userName }: Props) {
             href={href}
             onClick={() => setOpen(false)}
             className={cn(
-              'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              'flex items-center gap-3 rounded-none px-3 py-2.5 text-sm font-medium transition-colors',
               pathname === href
                 ? 'bg-primary text-primary-foreground'
                 : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -57,7 +57,7 @@ export function DashboardShell({ userEmail, userName }: Props) {
       </nav>
       <div className="mt-auto border-t border-border pt-4">
         <div className="flex items-center gap-3 px-3 py-2">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-none bg-primary/10 text-sm font-medium text-primary">
             {(userName || userEmail || '?').charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">

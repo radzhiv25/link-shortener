@@ -45,7 +45,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4">
-      <div className="w-full max-w-sm space-y-6 p-4 border border-dashed rounded">
+      <div className="w-full max-w-sm space-y-6 p-4 border border-dashed rounded-none">
         <div className="text-center">
           <Link href="/" className="text-xl font-medium">
             shrtnr

@@ -103,14 +103,14 @@ export default function Home() {
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder="Paste your long URL here"
-                  className="w-full rounded-lg border border-[#e5e5e5] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder-[#999] transition-colors duration-300 focus:border-[#111] focus:outline-none focus:ring-1 focus:ring-[#111] dark:border-[#333] dark:bg-[#0a0a0a] dark:text-[#f5f5f5] dark:placeholder-[#666] dark:focus:border-[#f5f5f5] dark:focus:ring-[#f5f5f5]"
+                  className="w-full rounded-none border border-[#e5e5e5] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder-[#999] transition-colors duration-300 focus:border-[#111] focus:outline-none focus:ring-1 focus:ring-[#111] dark:border-[#333] dark:bg-[#0a0a0a] dark:text-[#f5f5f5] dark:placeholder-[#666] dark:focus:border-[#f5f5f5] dark:focus:ring-[#f5f5f5]"
                   aria-label="Paste your long URL"
                 />
                 <button
                   type="button"
                   onClick={handleShorten}
                   disabled={isProcessing || !hasLink}
-                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#111] px-5 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5] dark:disabled:opacity-60"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-none bg-[#111] px-5 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5] dark:disabled:opacity-60"
                 >
                   {isProcessing ? (
                     'Shortening…'
@@ -131,7 +131,7 @@ export default function Home() {
                       placeholder="my-link"
                       value={customSlug}
                       onChange={(e) => setCustomSlug(e.target.value)}
-                      className="rounded-lg border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
+                      className="rounded-none border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -143,7 +143,7 @@ export default function Home() {
                       max={MAX_EXPIRY_DAYS}
                       value={expiresInDays}
                       onChange={(e) => setExpiresInDays(Math.min(MAX_EXPIRY_DAYS, Math.max(1, Number(e.target.value) || 7)))}
-                      className="rounded-lg border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
+                      className="rounded-none border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
                     />
                   </div>
                 </div>
@@ -241,7 +241,7 @@ export default function Home() {
           {/* Secondary CTA */}
           <section className="mt-20 sm:mt-24">
             <div
-              className="group flex cursor-pointer flex-col gap-4 rounded-xl border border-[#e5e5e5] bg-[#fafafa] p-6 transition-colors duration-300 hover:border-[#e0e0e0] hover:bg-[#f8f8f8] dark:border-[#262626] dark:bg-[#0a0a0a] dark:hover:border-[#333] dark:hover:bg-[#0f0f0f] sm:flex-row sm:items-center sm:justify-between"
+              className="group flex cursor-pointer flex-col gap-4 rounded-none border border-[#e5e5e5] bg-[#fafafa] p-6 transition-colors duration-300 hover:border-[#e0e0e0] hover:bg-[#f8f8f8] dark:border-[#262626] dark:bg-[#0a0a0a] dark:hover:border-[#333] dark:hover:bg-[#0f0f0f] sm:flex-row sm:items-center sm:justify-between"
               onClick={() => showToast()}
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), showToast())}
               role="button"
@@ -249,7 +249,7 @@ export default function Home() {
               aria-label="Create a short link"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-[#666] transition-colors duration-300 dark:bg-[#1a1a1a] dark:text-[#888]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-white text-[#666] transition-colors duration-300 dark:bg-[#1a1a1a] dark:text-[#888]">
                   <HiOutlineLink className="h-5 w-5" />
                 </span>
                 <div>
@@ -261,7 +261,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#111] transition-all duration-200 hover:gap-1.5 dark:text-[#f5f5f5] hover:bg-gray-200 rounded-md px-4 py-2">
+              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#111] transition-all duration-200 hover:gap-1.5 dark:text-[#f5f5f5] hover:bg-gray-200 rounded-none px-4 py-2">
                 Get started
                 <HiOutlineArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-px hover:translate-x-2" />
               </span>

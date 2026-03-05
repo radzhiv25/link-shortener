@@ -36,7 +36,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-24 left-1/2 z-50 w-[90vw] max-w-md -translate-x-1/2 rounded-lg border border-[#e5e5e5] bg-white px-4 py-3 text-center text-sm text-[#111] shadow-lg transition-colors duration-300 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-[#f5f5f5]"
+            className="fixed bottom-24 left-1/2 z-50 w-[90vw] max-w-md -translate-x-1/2 rounded-none border border-[#e5e5e5] bg-white px-4 py-3 text-center text-sm text-[#111] shadow-lg transition-colors duration-300 dark:border-[#333] dark:bg-[#1a1a1a] dark:text-[#f5f5f5]"
             role="status"
             aria-live="polite"
           >

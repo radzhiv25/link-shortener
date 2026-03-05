@@ -142,7 +142,7 @@ export default function DashboardPage() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+        <div className="rounded-none border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
           {error}
         </div>
       )}
@@ -152,7 +152,7 @@ export default function DashboardPage() {
           <CardContent className="pt-6">
             <div className="space-y-3">
               {[1, 2, 3, 4].map((i) => (
-                <Skeleton key={i} className="h-14 w-full rounded-lg" />
+                <Skeleton key={i} className="h-14 w-full rounded-none" />
               ))}
             </div>
           </CardContent>
@@ -160,7 +160,7 @@ export default function DashboardPage() {
       ) : links.length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="rounded-full bg-muted p-4">
+            <div className="rounded-none bg-muted p-4">
               <Copy className="size-8 text-muted-foreground" />
             </div>
             <h2 className="mt-4 text-lg font-medium">No links yet</h2>
