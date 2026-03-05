@@ -13,6 +13,9 @@ import {
   HiOutlineGlobeAlt,
   HiOutlineShare,
   HiOutlineChartBarSquare,
+  HiOutlineCpuChip,
+  HiOutlineBolt,
+  HiOutlineTableCells,
 } from 'react-icons/hi2';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
@@ -68,7 +71,7 @@ export default function ShortenPage() {
           {/* Flow 1: The problem with long URLs */}
           <section className="mt-12 sm:mt-16 md:mt-20">
             <motion.div
-              className="flex flex-col items-center justify-center gap-6 rounded-xl border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-8"
+              className="flex flex-col items-center justify-center gap-6 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-8"
               aria-label="Illustration: the problem with long URLs"
               initial="hidden"
               whileInView="visible"
@@ -84,7 +87,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="rounded-lg bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
+                  className="rounded-none bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
                   animate={{ scale: [1, 1.02, 1] }}
                   transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
                 >
@@ -105,7 +108,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="rounded-lg bg-[#111] p-3 dark:bg-[#f5f5f5]"
+                  className="rounded-none bg-[#111] p-3 dark:bg-[#f5f5f5]"
                   initial={{ scale: 0.9 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -127,7 +130,7 @@ export default function ShortenPage() {
           {/* Flow 2: The journey behind every short link */}
           <section className="mt-12 sm:mt-16 md:mt-20">
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-3 rounded-xl border border-[#e5e5e5] bg-[#fafafa]/80 px-4 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:gap-4 sm:py-10"
+              className="flex flex-wrap items-center justify-center gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 px-4 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:gap-4 sm:py-10"
               aria-label="Illustration: from long URL to short link"
               initial="hidden"
               whileInView="visible"
@@ -151,7 +154,7 @@ export default function ShortenPage() {
                     transition={{ duration: 0.35 }}
                   >
                     <motion.div
-                      className="rounded-lg border border-[#e5e5e5] bg-white p-3 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
+                      className="rounded-none border border-[#e5e5e5] bg-white p-3 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: 'spring', stiffness: 400 }}
                     >
@@ -182,7 +185,7 @@ export default function ShortenPage() {
           {/* Flow 3: Share and track */}
           <section className="mt-12 sm:mt-16 md:mt-20">
             <motion.div
-              className="flex flex-col items-center justify-center gap-8 rounded-xl border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-10 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-12"
+              className="flex flex-col items-center justify-center gap-8 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-10 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-12"
               aria-label="Illustration: share and track"
               initial="hidden"
               whileInView="visible"
@@ -198,7 +201,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="relative rounded-full bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
+                  className="relative rounded-none bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
                   animate={{
                     boxShadow: [
                       '0 0 0 0 rgba(0,0,0,0)',
@@ -225,7 +228,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="rounded-lg border border-[#e5e5e5] bg-white p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
+                  className="rounded-none border border-[#e5e5e5] bg-white p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
                   initial={{ opacity: 0.8, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
@@ -244,11 +247,115 @@ export default function ShortenPage() {
             </p>
           </section>
 
+          {/* Behind the scenes: System design */}
+          <section className="mt-12 sm:mt-16 md:mt-20" id="system-design">
+            <motion.h2
+              className="flex items-center gap-2 text-lg font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]"
+              initial={{ opacity: 0, y: 6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35 }}
+            >
+              <HiOutlineCpuChip className="h-5 w-5 text-[#525252] dark:text-[#737373]" />
+              Behind the scenes: system design
+            </motion.h2>
+            <motion.p
+              className="mt-2 max-w-xl text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]"
+              initial={{ opacity: 0, y: 4 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: 0.05 }}
+            >
+              Here’s how shrtnr works under the hood — the same ideas you’d use to design a link shortener at scale.
+            </motion.p>
+
+            <motion.div
+              className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-20px' }}
+              variants={{
+                visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+                hidden: {},
+              }}
+            >
+              {/* APIs */}
+              <motion.div
+                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
+                variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.35 }}
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                  <HiOutlineServerStack className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
+                </div>
+                <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">APIs</h3>
+                <p className="text-xs leading-relaxed text-[#666] dark:text-[#a3a3a3]">
+                  <strong>POST</strong> /api/shorten — you send a long URL, we validate it, generate a short code (or use your custom slug), and save the mapping. <strong>GET</strong> /:shortCode — we look up the original URL and redirect the visitor. That’s the core: one write path, one read path.
+                </p>
+              </motion.div>
+
+              {/* Database */}
+              <motion.div
+                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
+                variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.35 }}
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                  <HiOutlineTableCells className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
+                </div>
+                <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">Database</h3>
+                <p className="text-xs leading-relaxed text-[#666] dark:text-[#a3a3a3]">
+                  Postgres stores the source of truth: <em>short_code → original_url</em>, plus user, expiry, and click count. A separate table records each click (IP, user agent, referrer) so you get both totals and per-click analytics.
+                </p>
+              </motion.div>
+
+              {/* Cache */}
+              <motion.div
+                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
+                variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.35 }}
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                  <HiOutlineBolt className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
+                </div>
+                <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">Cache</h3>
+                <p className="text-xs leading-relaxed text-[#666] dark:text-[#a3a3a3]">
+                  Redis caches <em>short_code → original_url</em>. On every redirect we check the cache first; if it’s a hit we skip the database. That keeps redirects fast and reduces load on Postgres. Cache entries expire with the link.
+                </p>
+              </motion.div>
+
+              {/* Analytics */}
+              <motion.div
+                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:col-span-2 lg:col-span-1"
+                variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.35 }}
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                  <HiOutlineChartBarSquare className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
+                </div>
+                <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">Analytics</h3>
+                <p className="text-xs leading-relaxed text-[#666] dark:text-[#a3a3a3]">
+                  Every time someone hits a short link we increment the click count and write a row (short_code, timestamp, IP, user agent, referrer). So you see both “how many” and “when / where” in your dashboard.
+                </p>
+              </motion.div>
+            </motion.div>
+
+            <motion.p
+              className="mt-4 text-xs leading-relaxed text-[#737373] transition-colors duration-300 dark:text-[#525252]"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.35 }}
+            >
+              In short: APIs (POST create, GET resolve), Postgres for storage, Redis for fast lookups, and a small analytics pipeline. Same ideas you’d use in a system design interview or a production shortener.
+            </motion.p>
+          </section>
+
           {/* CTA back to home */}
           <section className="mt-20 sm:mt-24">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#111] px-4 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#333] dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5]"
+              className="inline-flex items-center gap-2 rounded-none bg-[#111] px-4 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#333] dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5]"
             >
               Create a short link
               <HiOutlineArrowRight className="h-4 w-4" />
