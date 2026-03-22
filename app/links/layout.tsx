@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { LinksShell } from './LinksShell';
+import { LinksShell } from '@/app/links/LinksShell';
 
 export default async function LinksLayout({
   children,
@@ -17,7 +17,7 @@ export default async function LinksLayout({
         userName={session.user.name ?? null}
       />
       <main className="flex-1 overflow-auto px-4 py-6 md:px-8 md:py-8 lg:px-10">
-        <div className="mx-auto max-w-5xl">{children}</div>
+        <div className="w-full min-w-0">{children}</div>
       </main>
     </div>
   );

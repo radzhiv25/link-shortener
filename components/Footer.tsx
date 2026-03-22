@@ -6,7 +6,7 @@ import { HiOutlineLink } from 'react-icons/hi2';
 export function Footer() {
   return (
     <footer className="fixed bottom-0 left-0 w-full border-t border-[#e5e5e5]/40 bg-white/70 py-3 backdrop-blur-md transition-colors duration-300 dark:border-[#262626]/50 dark:bg-black/50 md:left-1/2 md:w-[50vw] md:-translate-x-1/2 md:py-4">
-      <div className="flex items-center justify-between gap-2 px-4 sm:px-6">
+      <div className="flex md:flex-row flex-col md:items-center items-start justify-between gap-2 px-4 sm:px-6">
         <Link
           href="/"
           className="group flex items-center gap-1.5 text-[13px] font-medium tracking-tight text-[#555] transition-colors duration-200 hover:text-[#111] dark:text-[#a3a3a3] dark:hover:text-[#f5f5f5]"
