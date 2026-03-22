@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { nanoid } from 'nanoid';
 import { db } from '@/app/lib/db';
+import { validatePasswordStrength } from '@/app/lib/password-policy';
 
 const SALT_ROUNDS = 10;
 
@@ -15,8 +16,9 @@ export async function POST(request: Request) {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'Valid email is required' }, { status: 400 });
     }
-    if (!password || password.length < 8) {
-      return NextResponse.json({ error: 'Password must be at least 8 characters' }, { status: 400 });
+    const pwCheck = validatePasswordStrength(password);
+    if (!pwCheck.ok) {
+      return NextResponse.json({ error: pwCheck.error }, { status: 400 });
     }
 
     const password_hash = await bcrypt.hash(password, SALT_ROUNDS);

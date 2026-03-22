@@ -7,11 +7,13 @@ import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PasswordField } from '@/components/PasswordField';
+import { AuthSplitShell } from '@/components/auth/AuthSplitShell';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
+  const callbackUrl = searchParams.get('callbackUrl') ?? '/links';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -41,13 +43,16 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
-      <div className="w-full max-w-sm space-y-6 border border-dashed p-4 rounded-none">
-        <div className="text-center">
-          <Link href="/" className="text-xl font-medium">
+    <AuthSplitShell variant="login">
+      <div className="space-y-8">
+        <div>
+          <Link href="/" className="text-lg font-semibold tracking-tight">
             shrtnr
           </Link>
-          <p className="mt-2 text-sm text-muted-foreground">Sign in to your account</p>
+          <h1 className="mt-6 text-3xl font-semibold tracking-tight md:text-4xl">Sign in</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Welcome back. Use your email and password.
+          </p>
         </div>
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -64,36 +69,39 @@ function LoginForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input
+            <PasswordField
               id="password"
-              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete="current-password"
             />
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="text-primary underline-offset-4 hover:underline">
+          <Link href="/register" className="text-foreground underline-offset-4 hover:underline">
             Sign up
           </Link>
         </p>
       </div>
-    </div>
+    </AuthSplitShell>
   );
 }
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading…</div>}>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">
+          Loading…
+        </div>
+      }
+    >
       <LoginForm />
     </Suspense>
   );

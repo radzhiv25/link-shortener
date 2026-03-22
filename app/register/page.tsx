@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PasswordField } from '@/components/PasswordField';
+import { AuthSplitShell } from '@/components/auth/AuthSplitShell';
+import { PASSWORD_POLICY_HINT, validatePasswordStrength } from '@/app/lib/password-policy';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -18,6 +21,13 @@ export default function RegisterPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+
+    const pw = validatePasswordStrength(password);
+    if (!pw.ok) {
+      setError(pw.error);
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch('/api/auth/register', {
@@ -44,13 +54,16 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
-      <div className="w-full max-w-sm space-y-6 p-4 border border-dashed rounded-none">
-        <div className="text-center">
-          <Link href="/" className="text-xl font-medium">
+    <AuthSplitShell variant="register">
+      <div className="space-y-8">
+        <div>
+          <Link href="/" className="text-lg font-semibold tracking-tight">
             shrtnr
           </Link>
-          <p className="mt-2 text-sm text-muted-foreground">Create an account</p>
+          <h1 className="mt-6 text-3xl font-semibold tracking-tight md:text-4xl">Create account</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Join to use custom slugs, expiry, and My links.
+          </p>
         </div>
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -78,31 +91,29 @@ export default function RegisterPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input
+            <PasswordField
               id="password"
-              type="password"
-              placeholder="At least 8 characters"
+              placeholder="6–10 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={8}
+              maxLength={10}
               autoComplete="new-password"
             />
+            <p className="text-xs text-muted-foreground leading-relaxed">{PASSWORD_POLICY_HINT}</p>
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? 'Creating account…' : 'Sign up'}
           </Button>
         </form>
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Already have an account?{' '}
-          <Link href="/login" className="text-primary underline-offset-4 hover:underline">
+          <Link href="/login" className="text-foreground underline-offset-4 hover:underline">
             Sign in
           </Link>
         </p>
       </div>
-    </div>
+    </AuthSplitShell>
   );
 }
