@@ -1,7 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getOriginalUrl, recordClick } from '@/app/lib/links';
 
-const RESERVED = new Set(['api', 'shorten', 'login', 'register', 'dashboard', '_next', 'favicon.ico']);
+const RESERVED = new Set([
+  'api',
+  'shorten',
+  'create',
+  'links',
+  'login',
+  'register',
+  'dashboard',
+  '_next',
+  'favicon.ico',
+]);
 
 export async function GET(
   request: NextRequest,

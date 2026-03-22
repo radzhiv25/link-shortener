@@ -1,76 +1,84 @@
 'use client';
 
-import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { motion } from 'motion/react';
-import { HiOutlineArrowRight, HiOutlineLink } from 'react-icons/hi2';
+import {
+  HiOutlineArrowRight,
+  HiOutlineLink,
+  HiOutlineClipboardDocument,
+  HiOutlineBolt,
+  HiOutlineShare,
+  HiOutlineTag,
+  HiOutlineChartBarSquare,
+  HiOutlineRectangleStack,
+  HiOutlineArrowPath,
+} from 'react-icons/hi2';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { useToast } from '@/components/Toast';
 import { useTheme } from '@/components/ThemeProvider';
 import { AnimatedGradientText } from '@/components/AnimatedGradientText';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
-const DEFAULT_EXPIRY_DAYS = 7;
-const MAX_EXPIRY_DAYS = 30;
+const HOW_STEPS = [
+  {
+    step: '1',
+    title: 'Paste',
+    desc: 'Open Create and drop in any long URL.',
+    Icon: HiOutlineClipboardDocument,
+  },
+  {
+    step: '2',
+    title: 'Shorten',
+    desc: 'We generate a short link you can copy.',
+    Icon: HiOutlineBolt,
+  },
+  {
+    step: '3',
+    title: 'Share',
+    desc: 'Use it anywhere — messages, bios, posts.',
+    Icon: HiOutlineShare,
+  },
+] as const;
+
+const ACCOUNT_FEATURES = [
+  {
+    title: 'Custom slugs',
+    desc: 'Choose a memorable short code instead of a random string.',
+    Icon: HiOutlineTag,
+  },
+  {
+    title: 'Click counts',
+    desc: 'See how often each link is opened.',
+    Icon: HiOutlineChartBarSquare,
+  },
+  {
+    title: 'My links',
+    desc: 'Edit expiry, rename slugs, or delete links in one list.',
+    Icon: HiOutlineRectangleStack,
+  },
+] as const;
 
 export default function Home() {
-  const showToast = useToast();
   const { theme } = useTheme();
-  const { data: session } = useSession();
   const isDark = theme === 'dark';
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [url, setUrl] = useState('');
-  const [customSlug, setCustomSlug] = useState('');
-  const [expiresInDays, setExpiresInDays] = useState(DEFAULT_EXPIRY_DAYS);
-
-  const hasLink = url.trim().length > 0;
-
-  const handleShorten = async () => {
-    if (isProcessing || !hasLink) return;
-    const originalUrl = url.trim();
-    setIsProcessing(true);
-    try {
-      const body: { url: string; customSlug?: string; expiresInDays?: number } = { url: originalUrl };
-      if (session?.user && customSlug.trim()) body.customSlug = customSlug.trim();
-      if (session?.user && expiresInDays >= 1 && expiresInDays <= MAX_EXPIRY_DAYS) body.expiresInDays = expiresInDays;
-      const res = await fetch('/api/shorten', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        showToast(data?.error ?? 'Something went wrong');
-        return;
-      }
-      const shortUrl = data.shortUrl as string | undefined;
-      if (shortUrl) {
-        await navigator.clipboard.writeText(shortUrl).catch(() => {});
-        showToast(`Short link copied: ${shortUrl}`);
-      } else {
-        showToast('Short link created.');
-      }
-    } catch {
-      showToast('Something went wrong');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-white text-[#111] transition-colors duration-300 dark:bg-black dark:text-[#f5f5f5]">
+    <div className="relative min-h-screen overflow-hidden bg-white text-[#111] transition-colors duration-300 dark:bg-black dark:text-[#f5f5f5]">
+      {/* Atmospheric background (full width behind content column) */}
+      <div
+        className="home-landing-bg pointer-events-none fixed inset-0 -z-10 opacity-100"
+        aria-hidden
+      />
+
       <Navbar />
-      <div className="mx-auto flex w-full flex-1 flex-col md:w-[50vw] md:max-w-[50vw]">
+      <div className="relative mx-auto flex w-full flex-1 flex-col md:w-[50vw] md:max-w-[50vw]">
         <main className="w-full flex-1 px-4 pb-24 pt-24 sm:px-6 sm:pb-28 sm:pt-32">
           {/* Hero */}
-          <section>
+          <section className="relative">
             <motion.h1
               className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-[3rem]"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
             >
               <AnimatedGradientText
                 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-[3rem]"
@@ -85,113 +93,90 @@ export default function Home() {
               className="mt-4 max-w-lg text-[15px] leading-relaxed text-[#555] transition-colors duration-300 dark:text-[#a3a3a3]"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.45 }}
+              transition={{ delay: 0.12, duration: 0.45 }}
             >
-              Paste a link, get a short one. Create an account to get a dashboard and manage your links.
+              Turn long URLs into short, shareable links. Sign in to pick custom slugs, set expiry, and see clicks in one place.
             </motion.p>
 
-            {/* URL input + CTA */}
             <motion.div
-              className="mt-8 space-y-4"
+              className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.14, duration: 0.45 }}
+              transition={{ delay: 0.18, duration: 0.45 }}
             >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <input
-                  type="url"
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  placeholder="Paste your long URL here"
-                  className="w-full rounded-none border border-[#e5e5e5] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder-[#999] transition-colors duration-300 focus:border-[#111] focus:outline-none focus:ring-1 focus:ring-[#111] dark:border-[#333] dark:bg-[#0a0a0a] dark:text-[#f5f5f5] dark:placeholder-[#666] dark:focus:border-[#f5f5f5] dark:focus:ring-[#f5f5f5]"
-                  aria-label="Paste your long URL"
-                />
-                <button
-                  type="button"
-                  onClick={handleShorten}
-                  disabled={isProcessing || !hasLink}
-                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-none bg-[#111] px-5 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5] dark:disabled:opacity-60"
-                >
-                  {isProcessing ? (
-                    'Shortening…'
-                  ) : (
-                    <>
-                      Shorten
-                      <HiOutlineArrowRight className="h-4 w-4" />
-                    </>
-                  )}
-                </button>
-              </div>
-              {session?.user && (
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="custom-slug" className="text-xs text-[#666] dark:text-[#a3a3a3]">Custom slug (optional)</Label>
-                    <Input
-                      id="custom-slug"
-                      placeholder="my-link"
-                      value={customSlug}
-                      onChange={(e) => setCustomSlug(e.target.value)}
-                      className="rounded-none border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="expiry" className="text-xs text-[#666] dark:text-[#a3a3a3]">Expires in (days, 1–30)</Label>
-                    <Input
-                      id="expiry"
-                      type="number"
-                      min={1}
-                      max={MAX_EXPIRY_DAYS}
-                      value={expiresInDays}
-                      onChange={(e) => setExpiresInDays(Math.min(MAX_EXPIRY_DAYS, Math.max(1, Number(e.target.value) || 7)))}
-                      className="rounded-none border-[#e5e5e5] bg-[#fafafa] dark:border-[#333] dark:bg-[#0a0a0a]"
-                    />
-                  </div>
-                </div>
-              )}
-              <p className="text-xs text-[#888] transition-colors duration-300 dark:text-[#737373]">
-                {session?.user ? 'Links expire in 7–30 days. Manage them in your dashboard.' : 'Sign up for a dashboard, custom slugs, and expiry (7–30 days).'}
+              <Link
+                href="/create"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#111] px-6 py-3 text-sm font-medium text-white shadow-[4px_4px_0_0_rgba(0,0,0,0.15)] transition-all duration-200 hover:bg-[#333] hover:shadow-[2px_2px_0_0_rgba(0,0,0,0.12)] dark:bg-[#f5f5f5] dark:text-[#111] dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.12)] dark:hover:bg-[#e5e5e5]"
+              >
+                Create a short link
+                <HiOutlineArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/shorten"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-[#d4d4d4] bg-white/60 px-6 py-3 text-sm font-medium text-[#111] backdrop-blur-sm transition-colors duration-200 hover:bg-[#fafafa] dark:border-[#404040] dark:bg-black/30 dark:text-[#f5f5f5] dark:hover:bg-[#0a0a0a]"
+              >
+                How it works
+              </Link>
+            </motion.div>
+
+            {/* Illustrative preview — below headline & CTAs so the hero reads first */}
+            <motion.div
+              className="mt-12 rounded-md border border-[#e5e5e5] bg-white/80 p-4 backdrop-blur-sm transition-colors duration-300 dark:border-[#262626] dark:bg-black/40 sm:mt-14 sm:p-5"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.22 }}
+              aria-hidden
+            >
+              <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.2em] text-[#888] dark:text-[#666]">
+                Preview
               </p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <div className="flex min-w-0 flex-1 items-center gap-2 rounded-md border border-[#e5e5e5] bg-[#fafafa] px-3 py-2.5 font-mono text-[11px] text-[#666] transition-colors dark:border-[#333] dark:bg-[#0a0a0a] dark:text-[#a3a3a3] sm:text-xs">
+                  <HiOutlineLink className="h-4 w-4 shrink-0 text-[#999] dark:text-[#666]" />
+                  <span className="truncate">https://example.com/very/long/path/to/page</span>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-[#737373] sm:justify-start">
+                  <HiOutlineArrowPath className="h-5 w-5 shrink-0 sm:w-4" />
+                  <span className="hidden text-[10px] uppercase tracking-wider sm:inline">shorten</span>
+                </div>
+                <div className="flex items-center gap-2 rounded-md border border-[#111] bg-[#111] px-3 py-2.5 font-mono text-[11px] text-white dark:border-[#f5f5f5] dark:bg-[#f5f5f5] dark:text-[#111] sm:text-xs">
+                  <span className="text-[#a3a3a3] dark:text-[#525252]">shrtnr.app/</span>
+                  <span className="font-medium">abc12</span>
+                </div>
+              </div>
             </motion.div>
           </section>
 
           {/* How it works */}
           <section className="mt-20 border-t border-[#e5e5e5] pt-12 transition-colors duration-300 dark:border-[#262626] sm:mt-24">
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#737373] transition-colors duration-300 dark:text-[#525252]">
-              How it works
-            </p>
-            <div className="mt-8 grid gap-8 sm:grid-cols-3 sm:gap-6">
-              {[
-                {
-                  step: '1',
-                  title: 'Paste',
-                  desc: 'Drop any long URL into the box above.',
-                },
-                {
-                  step: '2',
-                  title: 'Shorten',
-                  desc: 'We generate a short link instantly.',
-                },
-                {
-                  step: '3',
-                  title: 'Share',
-                  desc: 'Use the short link anywhere.',
-                },
-              ].map(({ step, title, desc }, i) => (
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#737373] transition-colors duration-300 dark:text-[#525252]">
+                How it works
+              </p>
+              <div className="hidden h-px flex-1 min-w-[80px] bg-gradient-to-r from-[#e5e5e5] to-transparent dark:from-[#333] sm:block" aria-hidden />
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3 sm:gap-4">
+              {HOW_STEPS.map(({ step, title, desc, Icon }, i) => (
                 <motion.div
                   key={step}
-                  className="min-w-0"
-                  initial={{ opacity: 0, y: 4 }}
+                  className="group relative rounded-md border border-[#e5e5e5] bg-white/70 p-5 transition-colors duration-300 hover:border-[#ccc] hover:bg-white dark:border-[#262626] dark:bg-[#0a0a0a]/80 dark:hover:border-[#404040]"
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.05, duration: 0.4 }}
+                  transition={{ delay: i * 0.06, duration: 0.4 }}
                 >
-                  <span className="text-xs font-medium text-[#ccc] transition-colors duration-300 dark:text-[#525252]">
-                    {step}
-                  </span>
-                  <h3 className="mt-1.5 text-sm font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]">
+                  <div className="mb-4 flex items-start justify-between gap-2">
+                    <span className="text-xs font-medium tabular-nums text-[#bbb] transition-colors dark:text-[#525252]">
+                      {step}
+                    </span>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-md border border-[#e5e5e5] bg-[#fafafa] text-[#525252] transition-colors group-hover:border-[#d4d4d4] dark:border-[#333] dark:bg-[#141414] dark:text-[#a3a3a3]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                  </div>
+                  <h3 className="text-sm font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]">
                     {title}
                   </h3>
-                  <p className="mt-0.5 text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
+                  <p className="mt-1.5 text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
                     {desc}
                   </p>
                 </motion.div>
@@ -199,40 +184,41 @@ export default function Home() {
             </div>
           </section>
 
-          {/* More features */}
+          {/* Features */}
           <section className="mt-16 sm:mt-20">
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#737373] transition-colors duration-300 dark:text-[#525252]">
-              More than short links
-            </p>
-            <div className="mt-6 grid gap-6 sm:grid-cols-3 sm:gap-4">
-              {[
-                {
-                  title: 'Custom URLs',
-                  desc: 'Pick your own short slug so links are easy to remember and share.',
-                },
-                {
-                  title: 'Track clicks',
-                  desc: 'See how many times each link is clicked and when.',
-                },
-                {
-                  title: 'Dashboard',
-                  desc: 'Manage all your links, view stats, and edit or delete anytime.',
-                },
-              ].map(({ title, desc }, i) => (
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#737373] transition-colors duration-300 dark:text-[#525252]">
+                With an account
+              </p>
+              <div className="hidden h-px flex-1 min-w-[80px] bg-gradient-to-r from-[#e5e5e5] to-transparent dark:from-[#333] sm:block" aria-hidden />
+            </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              {ACCOUNT_FEATURES.map(({ title, desc, Icon }, i) => (
                 <motion.div
                   key={title}
-                  className="min-w-0"
-                  initial={{ opacity: 0, y: 4 }}
+                  className="relative overflow-hidden rounded-md border border-[#e5e5e5] bg-gradient-to-b from-[#fafafa] to-white p-5 dark:border-[#262626] dark:from-[#111] dark:to-[#0a0a0a]"
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.04, duration: 0.4 }}
+                  transition={{ delay: i * 0.05, duration: 0.4 }}
                 >
-                  <h3 className="text-sm font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]">
-                    {title}
-                  </h3>
-                  <p className="mt-0.5 text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
-                    {desc}
-                  </p>
+                  <div
+                    className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 opacity-[0.07] dark:opacity-[0.12]"
+                    aria-hidden
+                  >
+                    <Icon className="h-full w-full" />
+                  </div>
+                  <div className="relative">
+                    <div className="mb-3 inline-flex w-fit rounded-md border border-[#e5e5e5] bg-white p-2 dark:border-[#333] dark:bg-[#141414]">
+                      <Icon className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
+                    </div>
+                    <h3 className="text-sm font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]">
+                      {title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
+                      {desc}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -240,32 +226,39 @@ export default function Home() {
 
           {/* Secondary CTA */}
           <section className="mt-20 sm:mt-24">
-            <div
-              className="group flex cursor-pointer flex-col gap-4 rounded-none border border-[#e5e5e5] bg-[#fafafa] p-6 transition-colors duration-300 hover:border-[#e0e0e0] hover:bg-[#f8f8f8] dark:border-[#262626] dark:bg-[#0a0a0a] dark:hover:border-[#333] dark:hover:bg-[#0f0f0f] sm:flex-row sm:items-center sm:justify-between"
-              onClick={() => showToast()}
-              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), showToast())}
-              role="button"
-              tabIndex={0}
-              aria-label="Create a short link"
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
             >
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-white text-[#666] transition-colors duration-300 dark:bg-[#1a1a1a] dark:text-[#888]">
-                  <HiOutlineLink className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="text-sm font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]">
-                    Ready to shorten?
-                  </p>
-                  <p className="text-xs text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
-                    Custom URLs, tracking, and a dashboard for all your links.
-                  </p>
+              <Link
+                href="/create"
+                className="group relative flex cursor-pointer flex-col gap-5 overflow-hidden rounded-md border border-[#e5e5e5] bg-[#fafafa] p-6 transition-colors duration-300 hover:border-[#d4d4d4] dark:border-[#262626] dark:bg-[#0a0a0a] dark:hover:border-[#404040] sm:flex-row sm:items-center sm:justify-between sm:p-8"
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_40%,rgba(0,0,0,0.03)_50%,transparent_60%)] dark:bg-[linear-gradient(110deg,transparent_40%,rgba(255,255,255,0.04)_50%,transparent_60%)]"
+                  aria-hidden
+                />
+                <div className="relative flex items-start gap-4 sm:items-center">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[#e5e5e5] bg-white text-[#666] shadow-sm transition-colors dark:border-[#333] dark:bg-[#141414] dark:text-[#888]">
+                    <HiOutlineLink className="h-6 w-6" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium text-[#111] transition-colors duration-300 dark:text-[#f5f5f5]">
+                      Ready to shorten a URL?
+                    </p>
+                    <p className="mt-0.5 text-sm text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
+                      Open the creator — no clutter on this page.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#111] transition-all duration-200 hover:gap-1.5 dark:text-[#f5f5f5] hover:bg-gray-200 rounded-none px-4 py-2">
-                Get started
-                <HiOutlineArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-px hover:translate-x-2" />
-              </span>
-            </div>
+                <span className="relative inline-flex items-center gap-2 self-start rounded-md border border-[#e5e5e5] bg-white px-5 py-2.5 text-sm font-medium text-[#111] transition-all duration-200 group-hover:gap-3 dark:border-[#333] dark:bg-[#141414] dark:text-[#f5f5f5] sm:self-auto">
+                  Go to Create
+                  <HiOutlineArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            </motion.div>
           </section>
         </main>
         <Footer />

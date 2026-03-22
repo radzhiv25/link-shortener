@@ -2,19 +2,19 @@ import { auth } from '@/auth';
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
-  const isDashboard = req.nextUrl.pathname.startsWith('/dashboard');
+  const isLinks = req.nextUrl.pathname.startsWith('/links');
   const isLogin = req.nextUrl.pathname.startsWith('/login');
   const isRegister = req.nextUrl.pathname.startsWith('/register');
 
-  if (isDashboard && !isLoggedIn) {
+  if (isLinks && !isLoggedIn) {
     return Response.redirect(new URL('/login', req.nextUrl.origin));
   }
   if ((isLogin || isRegister) && isLoggedIn) {
-    return Response.redirect(new URL('/dashboard', req.nextUrl.origin));
+    return Response.redirect(new URL('/links', req.nextUrl.origin));
   }
   return undefined;
 });
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/register'],
+  matcher: ['/links/:path*', '/login', '/register'],
 };
