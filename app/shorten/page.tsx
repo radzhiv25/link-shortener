@@ -64,14 +64,14 @@ export default function ShortenPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.06, duration: 0.35 }}
             >
-              A minimal link shortener that turns long URLs into short, shareable links. Create an account to get a dashboard, custom slugs, and click tracking.
+              A minimal link shortener that turns long URLs into short, shareable links. Create an account for custom slugs, click tracking, and a single place to manage all your links.
             </motion.p>
           </section>
 
           {/* Flow 1: The problem with long URLs */}
           <section className="mt-12 sm:mt-16 md:mt-20">
             <motion.div
-              className="flex flex-col items-center justify-center gap-6 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-8"
+              className="flex flex-col items-center justify-center gap-6 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-8"
               aria-label="Illustration: the problem with long URLs"
               initial="hidden"
               whileInView="visible"
@@ -87,7 +87,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="rounded-none bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
+                  className="rounded-md bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
                   animate={{ scale: [1, 1.02, 1] }}
                   transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
                 >
@@ -108,7 +108,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="rounded-none bg-[#111] p-3 dark:bg-[#f5f5f5]"
+                  className="rounded-md bg-[#111] p-3 dark:bg-[#f5f5f5]"
                   initial={{ scale: 0.9 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -130,7 +130,7 @@ export default function ShortenPage() {
           {/* Flow 2: The journey behind every short link */}
           <section className="mt-12 sm:mt-16 md:mt-20">
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 px-4 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:gap-4 sm:py-10"
+              className="flex flex-wrap items-center justify-center gap-3 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 px-4 py-8 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:gap-4 sm:py-10"
               aria-label="Illustration: from long URL to short link"
               initial="hidden"
               whileInView="visible"
@@ -154,7 +154,7 @@ export default function ShortenPage() {
                     transition={{ duration: 0.35 }}
                   >
                     <motion.div
-                      className="rounded-none border border-[#e5e5e5] bg-white p-3 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
+                      className="rounded-md border border-[#e5e5e5] bg-white p-3 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: 'spring', stiffness: 400 }}
                     >
@@ -178,14 +178,14 @@ export default function ShortenPage() {
               The journey behind every short link
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
-              You paste a URL. We store the mapping and generate a short code. When someone clicks your short link, they're sent to the original address. With an account, you can choose a custom slug, see how many clicks you get, and manage everything from your dashboard.
+              You paste a URL. We store the mapping and generate a short code. When someone clicks your short link, they're sent to the original address. With an account, you can choose a custom slug, see how many clicks you get, and manage everything under My links.
             </p>
           </section>
 
           {/* Flow 3: Share and track */}
           <section className="mt-12 sm:mt-16 md:mt-20">
             <motion.div
-              className="flex flex-col items-center justify-center gap-8 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-10 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-12"
+              className="flex flex-col items-center justify-center gap-8 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 px-6 py-10 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:min-h-[180px] sm:flex-row sm:gap-12"
               aria-label="Illustration: share and track"
               initial="hidden"
               whileInView="visible"
@@ -201,7 +201,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="relative rounded-none bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
+                  className="relative rounded-md bg-[#e5e5e5]/80 p-4 transition-colors duration-300 dark:bg-[#262626]"
                   animate={{
                     boxShadow: [
                       '0 0 0 0 rgba(0,0,0,0)',
@@ -228,7 +228,7 @@ export default function ShortenPage() {
                 transition={{ duration: 0.4 }}
               >
                 <motion.div
-                  className="rounded-none border border-[#e5e5e5] bg-white p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
+                  className="rounded-md border border-[#e5e5e5] bg-white p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#171717]"
                   initial={{ opacity: 0.8, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
@@ -243,7 +243,7 @@ export default function ShortenPage() {
               Share and track
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#666] transition-colors duration-300 dark:text-[#a3a3a3]">
-              Use your short link anywhere — messages, bios, print. If you're signed in, the dashboard shows how many times each link was clicked so you can see what's working.
+              Use your short link anywhere — messages, bios, print. If you're signed in, My links shows how many times each link was clicked so you can see what's working.
             </p>
           </section>
 
@@ -270,7 +270,7 @@ export default function ShortenPage() {
             </motion.p>
 
             <motion.div
-              className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              className="mt-6 grid gap-4 grid-cols-1 lg:grid-cols-2"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-20px' }}
@@ -281,11 +281,11 @@ export default function ShortenPage() {
             >
               {/* APIs */}
               <motion.div
-                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
+                className="flex flex-col gap-3 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
                 variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.35 }}
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#e5e5e5] dark:bg-[#262626]">
                   <HiOutlineServerStack className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
                 </div>
                 <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">APIs</h3>
@@ -296,11 +296,11 @@ export default function ShortenPage() {
 
               {/* Database */}
               <motion.div
-                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
+                className="flex flex-col gap-3 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
                 variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.35 }}
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#e5e5e5] dark:bg-[#262626]">
                   <HiOutlineTableCells className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
                 </div>
                 <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">Database</h3>
@@ -311,11 +311,11 @@ export default function ShortenPage() {
 
               {/* Cache */}
               <motion.div
-                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
+                className="flex flex-col gap-3 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80"
                 variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.35 }}
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#e5e5e5] dark:bg-[#262626]">
                   <HiOutlineBolt className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
                 </div>
                 <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">Cache</h3>
@@ -326,16 +326,16 @@ export default function ShortenPage() {
 
               {/* Analytics */}
               <motion.div
-                className="flex flex-col gap-3 rounded-none border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:col-span-2 lg:col-span-1"
+                className="flex flex-col gap-3 rounded-md border border-[#e5e5e5] bg-[#fafafa]/80 p-4 transition-colors duration-300 dark:border-[#333] dark:bg-[#0a0a0a]/80 sm:col-span-2 lg:col-span-1"
                 variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.35 }}
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-[#e5e5e5] dark:bg-[#262626]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#e5e5e5] dark:bg-[#262626]">
                   <HiOutlineChartBarSquare className="h-5 w-5 text-[#525252] dark:text-[#a3a3a3]" />
                 </div>
                 <h3 className="text-sm font-medium text-[#111] dark:text-[#f5f5f5]">Analytics</h3>
                 <p className="text-xs leading-relaxed text-[#666] dark:text-[#a3a3a3]">
-                  Every time someone hits a short link we increment the click count and write a row (short_code, timestamp, IP, user agent, referrer). So you see both “how many” and “when / where” in your dashboard.
+                  Every time someone hits a short link we increment the click count and write a row (short_code, timestamp, IP, user agent, referrer). So you see both “how many” and “when / where” in My links.
                 </p>
               </motion.div>
             </motion.div>
@@ -351,11 +351,11 @@ export default function ShortenPage() {
             </motion.p>
           </section>
 
-          {/* CTA back to home */}
+          {/* CTA */}
           <section className="mt-20 sm:mt-24">
             <Link
-              href="/"
-              className="inline-flex items-center gap-2 rounded-none bg-[#111] px-4 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#333] dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5]"
+              href="/create"
+              className="inline-flex items-center gap-2 rounded-md bg-[#111] px-4 py-2.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#333] dark:bg-[#f5f5f5] dark:text-[#111] dark:hover:bg-[#e5e5e5]"
             >
               Create a short link
               <HiOutlineArrowRight className="h-4 w-4" />
