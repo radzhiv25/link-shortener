@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "lint": "eslint",
     "test:db": "tsx app/lib/test-db.ts",
     "db:init": "npx tsx scripts/init-db.ts"
@@ -21,7 +21,7 @@
     "lucide-react": "^0.575.0",
     "motion": "^12.34.1",
     "nanoid": "^5.1.6",
-    "next": "16.1.6",
+    "next": "16.3.3",
     "next-auth": "^5.0.0-beta.30",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
